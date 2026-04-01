@@ -1,6 +1,7 @@
 import express,{Request,Response} from "express";
 import { logger } from "../config/logger";
 import cors from "cors"
+import authRoute from "./routes/authRoute"
 
  const app=express();
  
@@ -11,6 +12,9 @@ app.use(logger)
  app.use(cors())
 
  
+app.use("/api/v1/auth", authRoute)
+
+
 
 
 app.get('/',(req:Request,res:Response)=>{
