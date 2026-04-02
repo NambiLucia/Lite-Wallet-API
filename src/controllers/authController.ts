@@ -41,3 +41,45 @@ const hashedPassword= await bcrypt.hash(password,10)
 
     }
 }
+
+export const login= async(req:Request,res:Response)=>{
+
+    const{email,password}=req.body;
+
+        const user = await prisma.user.findUnique({ where: { email } });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const matchPassword = await bcrypt.compare(password, user.password);
+
+    if (!matchPassword) {
+      return res.status(401).json({ error: "Wrong Password" });
+    }
+//store session
+req.session.userId=user.id;
+req.session.email=user.email;
+req.session.role=user.role;
+
+ return res.status(200).json({ 
+    message: "Login successful",
+    user: {
+      id: user.id,
+      email: user.email,
+      full_name: user.full_name,
+      role: user.role
+    }
+  });
+
+
+}
+
+export const logout =(req: Request, res: Response)=>{
+req.session.destroy((err)=>{
+    if(err){
+       return res.status(500).json({ message: "Logout failed" });
+    }
+    res.clearCookie('connect.sid') //clear session cookie
+    return res.status(200).json({ message: "Logged out successfully" });
+})
+}
