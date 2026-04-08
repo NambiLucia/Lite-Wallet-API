@@ -8,6 +8,9 @@ export const getUsers = async (req:Request,res:Response) => {
     const skip = (page - 1) * limit;
 
     const users = await prisma.user.findMany({
+        where:{
+            deletedAt:null
+        },
       skip,
       take: limit,
       orderBy: {
@@ -45,3 +48,35 @@ export const updateUserById = async (req:Request, res:Response) => {
     return res.status(500).json({ message: "Failed to update user"});
   }
 };
+ 
+
+export const deleteUserById = async (req: Request, res: Response) => {
+  try {
+    if (!req.params.id) {
+      return res.status(400).json({ message: "User ID is required" });
+    }
+
+    const deletedUser = await prisma.user.update({
+      where: {
+        id: req.params.id as string,
+      },
+      data: {
+        deletedAt: new Date(), 
+      },
+    });
+
+    return res.status(200).json({
+      message: "User successfully deleted",
+      data: deletedUser,
+    });
+
+  } catch (error) {
+    console.error("Delete error:", error);
+    return res.status(500).json({ message: "Failed to delete user" });
+  }
+};
+
+
+
+
+
