@@ -57,9 +57,9 @@ export const login= async(req:Request,res:Response)=>{
       return res.status(401).json({ error: "Wrong Password" });
     }
 //store session
-req.session.userId=user.id;
-req.session.email=user.email;
-req.session.role=user.role;
+req.session.userId=user.id as string;
+req.session.email=user.email as string;
+req.session.role=user.role as string;
 
  return res.status(200).json({ 
     message: "Login successful",

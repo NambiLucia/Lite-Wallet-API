@@ -2,7 +2,8 @@ import express,{Request,Response} from "express";
 import { logger } from "../config/logger";
 import cors from "cors"
 import authRoute from "./routes/authRoute"
-import userRoute from "./routes/userroute";
+import userRoute from "./routes/userRoute";
+import walletRoute from "./routes/walletRoute"
 import session from "express-session";
 
  const app=express();
@@ -31,7 +32,7 @@ secret: process.env.SESSION_SECRET || "secret-key",
  
 app.use("/api/v1/auth", authRoute)
 app.use("/api/v1/users", userRoute)
-
+app.use("/api/v1/wallets", walletRoute)
 
 
 
