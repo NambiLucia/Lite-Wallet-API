@@ -10,7 +10,8 @@ const walletRouter=Router();
 walletRouter
 .get('/',sessionAuth,getWallet)
 .post('/deposit',sessionAuth,deposit)
-
+// .post('/withdraw',sessionAuth,withdraw)
+ 
 
 
 
