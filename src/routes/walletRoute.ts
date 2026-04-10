@@ -9,3 +9,9 @@ const walletRouter=Router();
 
 walletRouter
 .get('/',sessionAuth,getWallet)
+
+
+
+
+
+export default walletRouter

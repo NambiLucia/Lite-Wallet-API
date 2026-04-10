@@ -7,6 +7,6 @@ const authRoute =Router()
 
 authRoute
 .post("/register",register)
-.post("/login",sessionAuth,login)
+.post("/login",login)
 .post("/logout",sessionAuth,logout);
 export default authRoute
