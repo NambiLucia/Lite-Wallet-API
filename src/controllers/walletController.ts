@@ -87,7 +87,7 @@ export const deposit = async (req: Request, res: Response) => {
     });
 
     return res.status(200).json({
-      message: "Your Deposit Successful🎉🎉🎉. Thank you for depositing with",
+      message: "Your Deposit is Successful🎉🎉🎉. Thank you for depositing with us",
       transaction: result.transaction,
       newBalance: result.updatedWallet.balance,
     });
