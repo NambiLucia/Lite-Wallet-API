@@ -192,6 +192,10 @@ export const withdraw = async (req: Request, res: Response) => {
 
 export const transfer = async (req: Request, res: Response) => {
   try {
+ if (!req.session.userId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
     const { amount, receivingEmail } = req.body;
  
   
@@ -214,13 +218,9 @@ export const transfer = async (req: Request, res: Response) => {
     if (senderWallet.status !== "Active") return res.status(403).json({ message: "Your wallet is not Active" });
 
     if (senderWallet.balance < transferAmount) {
-      return res.status(400).json({ message: "Insufficient funds", currentBalance: senderWallet.balance });
+      return res.status(400).json({ message: "You have Insufficient funds!!!", currentBalance: senderWallet.balance });
     }
-    if(senderWallet.balance < transferAmount){
-      return res.status(400).json({
-        message:"You have Insufficient funds!!!",currentBalance:senderWallet.balance
-      });
-    }
+   
  
     // find Receiver user by email
     const receivingUser = await prisma.user.findUnique({
@@ -240,7 +240,7 @@ export const transfer = async (req: Request, res: Response) => {
     }
         
     // Block any self transfers
-    if(receivingUser.id===req.session.userId){
+    if(receivingUser.id === req.session.userId){
       return res.status(400).json({ message: "You cannot transfer to yourself" });
     }
     

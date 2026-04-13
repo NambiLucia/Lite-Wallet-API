@@ -23,7 +23,7 @@ secret: process.env.SESSION_SECRET || "secret-key",
   cookie: {
     httpOnly: true,   // JS in browser cannot access cookie (security)
     secure: false,    // set true in production with HTTPS
-    maxAge: 1000 * 60 * 60 //15 mins
+    maxAge: 1000 * 60 * 15 //15 mins
   }
 }))
 
