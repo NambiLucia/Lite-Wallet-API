@@ -3,6 +3,7 @@ import { getWallet,deposit,withdraw,transfer} from "../controllers/walletControl
 import { sessionAuth } from "../middleware/sessionAuth";
 import { schemaValidator } from "../middleware/schemaValidator";
 import { depositSchema,withdrawSchema,transferSchema } from "../middleware/joi-schemas";
+import { authorizeRole } from "../middleware/authorizeRole";
 
 
 
@@ -10,7 +11,7 @@ const walletRouter=Router();
 
 
 walletRouter
-.get('/',sessionAuth,getWallet)
+.get('/',sessionAuth,authorizeRole("Admin","User"),getWallet)
 .post('/deposit',sessionAuth,schemaValidator(depositSchema),deposit)
 .post('/withdraw',sessionAuth,schemaValidator(withdrawSchema),withdraw)
  .post('/transfer',sessionAuth,schemaValidator(transferSchema),transfer)
