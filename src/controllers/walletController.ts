@@ -33,6 +33,7 @@ export const getWallet = async (req: Request, res: Response) => {
   }
 };
 
+
 export const deposit = async (req: Request, res: Response) => {
   try {
     const { amount } = req.body;
@@ -172,20 +173,6 @@ export const withdraw = async (req: Request, res: Response) => {
     return res.status(500).json({ message: "Failed to make  a Deposit" });
   }
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -333,3 +320,4 @@ const updatedReceiverWallet = await tx.wallet.update({
     return res.status(500).json({ error: "Failed to Transfer Money!!!" });
   }
 };
+
