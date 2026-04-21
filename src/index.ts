@@ -5,6 +5,7 @@ import authRoute from "./routes/authRoute"
 import userRoute from "./routes/userRoute";
 import walletRoute from "./routes/walletRoute"
 import transactionRoute from "./routes/transactionRoute";
+import alertRoute from "./routes/alertRoute";
 import session from "express-session";
 import rateLimit from "express-rate-limit";
 
@@ -43,6 +44,7 @@ app.use("/api/v1/auth", authRoute)
 app.use("/api/v1/users", userRoute)
 app.use("/api/v1/wallets", walletRoute)
 app.use("/api/v1/transactions", transactionRoute)
+app.use("/api/v1/alerts", alertRoute)
 
 
 
