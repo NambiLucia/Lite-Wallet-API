@@ -6,8 +6,15 @@ import userRoute from "./routes/userRoute";
 import walletRoute from "./routes/walletRoute"
 import transactionRoute from "./routes/transactionRoute";
 import session from "express-session";
+import rateLimit from "express-rate-limit";
 
  const app=express();
+
+ const limiter =rateLimit({
+  windowMs:15 * 60 * 1000,//15 mins
+  max:100,// Limit each IP to 100 requests per 15mins
+   message:"Too many requests from this IP, please try again after 15 minutes",
+ })
  
 
 app.use(logger)
@@ -27,6 +34,7 @@ secret: process.env.SESSION_SECRET || "secret-key",
     maxAge: 1000 * 60 * 15 //15 mins
   }
 }))
+app.use(limiter)
 
 
 
