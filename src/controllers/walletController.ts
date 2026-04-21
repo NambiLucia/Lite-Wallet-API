@@ -87,6 +87,14 @@ export const deposit = async (req: Request, res: Response) => {
       return { transaction, updatedWallet };
     });
 
+        await prisma.alert.create({
+      data: {
+        userId: req.session.userId as string,
+        type: "Transaction",
+        message: `You deposited ${depositAmount} UGX. New balance: ${result.updatedWallet.balance} UGX`,
+      },
+    });
+
     return res.status(200).json({
       message: "Your Deposit is Successful🎉🎉🎉. Thank you for depositing with us",
       transaction: result.transaction,
@@ -162,6 +170,15 @@ export const withdraw = async (req: Request, res: Response) => {
       });
       return { transaction, updatedWallet };
     });
+
+    await prisma.alert.create({
+  data: {
+    userId: req.session.userId as string,
+    type: "Transaction",
+    message: `You withdrew ${withdrawAmount} UGX. New balance: ${result.updatedWallet.balance} UGX`,
+  },
+});
+
 
     return res.status(200).json({
       message: "Your Withdraw was Successful🎉🎉🎉",
@@ -295,7 +312,7 @@ const updatedSenderWallet = await tx.wallet.update({
 
 
 //update receiver wallet with reduced amount
-const updatedReceiverWallet = await tx.wallet.update({
+ await tx.wallet.update({
   where:{
     id:receivingWallet.id
   },
@@ -308,10 +325,26 @@ const updatedReceiverWallet = await tx.wallet.update({
 
     })
 
+    await prisma.alert.create({
+  data: {
+    userId: req.session.userId as string,  // sender
+    type: "Transaction",
+    message: `You transferred ${transferAmount} UGX to ${receivingEmail}`,
+  },
+});
+await prisma.alert.create({
+  data: {
+    userId: receivingUser.id,  // receiver also gets notified
+    type: "Transaction",
+    message: `You received ${transferAmount} UGX from someone`,
+  },
+});
+
      return res.status(200).json({
       message: `Transfer of ${transferAmount} UGX to ${receivingEmail} was successful`,
       transaction: result.senderTransaction,
       newBalance: result.updatedSenderWallet.balance,
+      
     });
     
  
