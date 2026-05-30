@@ -1,7 +1,8 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Dashboard from "./components/SignUp";
+import SignUp from "./components/SignUp";
 
 import './App.css'
+
 
 function App() {
   return (
@@ -9,7 +10,7 @@ function App() {
       <Router>
         <Routes>
 
-          <Route path="/" element={<Dashboard/>} />
+          <Route path="/" element={<SignUp/>} />
           
         </Routes>
 
