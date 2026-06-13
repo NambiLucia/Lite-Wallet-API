@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import { useForm } from "react-hook-form";
 
 type SignUpFormData = {
@@ -37,6 +37,7 @@ const SignUp = () => {
 
       console.log("Registered successfully:", result);
       // router.push('/dashboard')  ← add redirect here later
+      
 
     } catch (error) {
       console.error("Network error:", error);
