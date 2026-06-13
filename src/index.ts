@@ -22,7 +22,7 @@ app.use(logger)
  app.use(express.json())
  app.use(express.urlencoded({extended: true}))
  app.use(cors({
-     origin: 'http://localhost:3000', // for frontend url
+     origin: 'http://localhost:5173', 
   credentials: true    //for cookies to work
  }))
 app.use(session({
