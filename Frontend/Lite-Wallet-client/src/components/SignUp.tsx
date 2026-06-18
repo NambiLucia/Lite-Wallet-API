@@ -1,12 +1,26 @@
 // import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, Link } from "react-router-dom";
+import {z} from "zod";
+import {zodResolver} from "@hookform/resolvers/zod"
 
-type SignUpFormData = {
-  full_name: string;
-  email: string;
-  password: string;
-};
+
+const signUpSchema =z.object({
+   full_name: z
+    .string()
+    .min(1, "Full name is required")
+    .min(3, "Name must be at least 3 characters"),
+  email: z
+    .string()
+    .min(1, "Email is required")
+    .email("Enter a valid email address"),
+  password: z
+    .string()
+    .min(1, "Password is required")
+    .min(8, "Password must be at least 8 characters"),
+});
+
+type SignUpFormData=z.infer<typeof signUpSchema>;
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -14,7 +28,9 @@ const SignUp = () => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<SignUpFormData>();
+  } = useForm<SignUpFormData>({
+     resolver: zodResolver(signUpSchema),
+  });
 
   const onSubmit = async (data: SignUpFormData) => {
     try {
@@ -85,13 +101,7 @@ const SignUp = () => {
                   type="text"
                   placeholder="Mary Ashley"
                   className="w-full border border-gray-300 rounded-lg px-4 py-2 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  {...register("full_name", {
-                    required: "Full name is required",
-                    minLength: {
-                      value: 3,
-                      message: "Name must be at least 3 characters",
-                    },
-                  })}
+                  {...register("full_name")}
                 />
                 {errors.full_name && (
                   <p className="text-red-500 text-sm mt-1">
@@ -109,13 +119,7 @@ const SignUp = () => {
                   type="email"
                   placeholder="mary@example.com"
                   className="w-full border border-gray-300 rounded-lg px-4 py-2 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  {...register("email", {
-                    required: "Email is required",
-                    pattern: {
-                      value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                      message: "Enter a valid email address",
-                    },
-                  })}
+                  {...register("email")}
                 />
                 
                 {errors.email && (
@@ -134,13 +138,7 @@ const SignUp = () => {
                   type="password"
                   placeholder="••••••••"
                   className="w-full border border-gray-300 rounded-lg px-4 py-2 placeholder-gray-400  focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  {...register("password", {
-                    required: "Password is required",
-                    minLength: {
-                      value: 8,
-                      message: "Password must be at least 8 characters",
-                    },
-                  })}
+                  {...register("password")}
                 />
                 {errors.password && (
                   <p className="text-red-500 text-sm mt-1">
