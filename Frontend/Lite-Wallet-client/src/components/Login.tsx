@@ -3,13 +3,12 @@ import { useForm } from "react-hook-form";
 import { useNavigate, Link } from "react-router-dom";
 
 type SignUpFormData = {
-  full_name: string;
   email: string;
   password: string;
 };
 
-const SignUp = () => {
-  const navigate = useNavigate();
+const Login = () => {
+    const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -19,7 +18,7 @@ const SignUp = () => {
   const onSubmit = async (data: SignUpFormData) => {
     try {
       const response = await fetch(
-        "http://localhost:4900/api/v1/auth/register",
+        "http://localhost:4900/api/v1/auth/login",
         {
           method: "POST",
           headers: {
@@ -37,8 +36,8 @@ const SignUp = () => {
         return;
       }
 
-      console.log("Registered successfully:", result);
-      navigate('/login')  
+      console.log("Login successfully:", result);
+      navigate('/signup')
       
 
     } catch (error) {
@@ -69,36 +68,12 @@ const SignUp = () => {
           <div className="w-full max-w-md space-y-6">
 
             <div>
-              <h2 className="text-3xl font-bold text-gray-800">Create account</h2>
+              <h2 className="text-3xl font-bold text-gray-800">Login to Lite Wallet</h2>
               <p className="text-gray-500 mt-1">Join Lite Wallet today</p>
             </div>
 
           
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-
-              {/* FULL NAME */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  placeholder="Mary Ashley"
-                  className="w-full border border-gray-300 rounded-lg px-4 py-2 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  {...register("full_name", {
-                    required: "Full name is required",
-                    minLength: {
-                      value: 3,
-                      message: "Name must be at least 3 characters",
-                    },
-                  })}
-                />
-                {errors.full_name && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.full_name.message}
-                  </p>
-                )}
-              </div>
 
               
               <div>
@@ -154,15 +129,15 @@ const SignUp = () => {
                 disabled={isSubmitting}
                 className="w-full bg-gray-950 text-white py-2 rounded-lg font-semibold hover:bg-gray-600 transition disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isSubmitting ? "Creating account..." : "Create Account"}
+                {isSubmitting ? "Logging In..." : "Login"}
               </button>
 
             </form>
 
             <p className="text-center text-sm text-gray-500">
-              Already have an account?{" "}
-              <Link to="/login" className="text-blue-600 font-medium hover:underline">
-                Log in
+              Have No Account?{" "}
+              <Link to="/signup" className="text-blue-600 font-medium hover:underline">
+                Sign up Here!
               </Link>
             </p>
 
@@ -174,4 +149,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default Login;
