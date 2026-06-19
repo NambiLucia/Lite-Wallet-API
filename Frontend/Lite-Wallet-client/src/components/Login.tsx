@@ -49,7 +49,7 @@ const Login = () => {
       }
 
       console.log("Login successfully:", result);
-      navigate('/signup')
+      navigate('/dashboard')
       
 
     } catch (error) {
@@ -136,7 +136,7 @@ const Login = () => {
 
             <p className="text-center text-sm text-gray-500">
               Have No Account?{" "}
-              <Link to="/signup" className="text-blue-600 font-medium hover:underline">
+              <Link to="/" className="text-blue-600 font-medium hover:underline">
                 Sign up Here!
               </Link>
             </p>
