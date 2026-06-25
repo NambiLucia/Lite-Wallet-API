@@ -11,6 +11,7 @@ export const getWallet = async (req: Request, res: Response) => {
         userId: req.session.userId,
       },
       include: {
+        user:true,
         transactions: {
           orderBy: {
             createdAt: "desc",

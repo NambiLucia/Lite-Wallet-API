@@ -12,9 +12,10 @@ function App() {
   return (
     <div>
       <Router>
-        <Routes>
+        
+        <Toaster position="top-right" />
 
-          <Toaster position="top-right" />
+        <Routes>
 
           <Route path="/" element={<SignUp/>} />
           <Route path="/login" element={<Login/>} />
