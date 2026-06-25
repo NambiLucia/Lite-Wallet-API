@@ -1,25 +1,22 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import toast from "react-hot-toast";
 
 const depositSchema = z.object({
-  amount: z
-    .number({
-        error: (issue) =>
+  amount: z.number({
+    error: (issue) =>
       issue.input === undefined
         ? "Amount is required"
         : "Amount must be a number",
-     }),
+  }),
 });
 
 type DepositFormData = z.infer<typeof depositSchema>;
 
 const Deposit = () => {
   const navigate = useNavigate();
-  const [serverError, setServerError] = useState("");
-  const [success, setSuccess] = useState(false);
 
   const {
     register,
@@ -30,7 +27,6 @@ const Deposit = () => {
   });
 
   const onSubmit = async (data: DepositFormData) => {
-    setServerError("");
     try {
       const response = await fetch("http://localhost:4900/api/v1/wallets/deposit", {
         method: "POST",
@@ -42,14 +38,16 @@ const Deposit = () => {
       const result = await response.json();
 
       if (!response.ok) {
-        setServerError(result.message || "Deposit failed");
+        toast.error(result.message || "Deposit failed");
         return;
       }
 
-      setSuccess(true);
+      toast.success("Deposit successful");
+      navigate("/dashboard");
+
     } catch (error) {
-        console.log(error)
-      setServerError("Could not connect to server. Is your API running?");
+      console.error("Network error:", error);
+      toast.error("Could not connect to server. Is your API running?");
     }
   };
 
@@ -66,64 +64,45 @@ const Deposit = () => {
             ← Back
           </button>
           <h1 className="font-extrabold text-2xl text-gray-900">Deposit</h1>
-          <div className="w-10" /> {/* spacer to center title */}
+          <div className="w-10" />
         </div>
 
-        {/* SUCCESS STATE */}
-        {success ? (
-          <div className="flex flex-col items-center gap-6 py-8">
-            <div className="text-5xl">✅</div>
-            <p className="text-lg font-semibold text-gray-900">Deposit successful</p>
-            <button
-              onClick={() => navigate("/dashboard")}
-              className="w-full py-3 bg-gray-900 text-white rounded-xl text-sm font-medium hover:bg-gray-700 transition"
-            >
-              Back to Dashboard
-            </button>
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
 
-            {/* AMOUNT */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Amount (UGX)
-              </label>
-              <input
-                type="number"
-                placeholder="0"
-                className="w-full border border-gray-400 bg-gray-50 rounded-xl px-4 py-3 text-2xl font-mono text-gray-900 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500"
-                {...register("amount", { valueAsNumber: true })}
-              />
-              {errors.amount && (
-                <p className="text-red-500 text-sm mt-1">{errors.amount.message}</p>
-              )}
-            </div>
-
-            {/* SERVER ERROR */}
-            {serverError && (
-              <p className="text-red-500 text-sm">{serverError}</p>
+          {/* AMOUNT */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Amount (UGX)
+            </label>
+            <input
+              type="number"
+              placeholder="0"
+              className="w-full border border-gray-400 bg-gray-50 rounded-xl px-4 py-3 text-2xl font-mono text-gray-900 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500"
+              {...register("amount", { valueAsNumber: true })}
+            />
+            {errors.amount && (
+              <p className="text-red-500 text-sm mt-1">{errors.amount.message}</p>
             )}
+          </div>
 
-            {/* SUBMIT */}
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="w-full py-3 bg-gray-900 text-white rounded-xl text-sm font-medium hover:bg-gray-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {isSubmitting ? "Processing..." : "Confirm Deposit"}
-            </button>
+          {/* SUBMIT */}
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full py-3 bg-gray-900 text-white rounded-xl text-sm font-medium hover:bg-gray-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isSubmitting ? "Processing..." : "Confirm Deposit"}
+          </button>
 
-            <button
-              type="button"
-              onClick={() => navigate("/dashboard")}
-              className="w-full py-3 border border-gray-400 rounded-xl text-sm text-gray-700 hover:bg-gray-400 transition"
-            >
-              Cancel
-            </button>
+          <button
+            type="button"
+            onClick={() => navigate("/dashboard")}
+            className="w-full py-3 border border-gray-400 rounded-xl text-sm text-gray-700 hover:bg-gray-400 transition"
+          >
+            Cancel
+          </button>
 
-          </form>
-        )}
+        </form>
 
       </div>
     </div>
