@@ -47,7 +47,8 @@ const Dashboard = () => {
           {/* RIGHT PANEL */}
           <div className="flex flex-col gap-4">
             <div className="grid grid-cols-2 gap-3">
-              <button className="bg-gray-50 border border-gray-100 rounded-xl px-5 py-5 flex items-center justify-center gap-2 text-2xl font-mono text-gray-700 hover:bg-gray-100 transition">
+              <button onClick={()=>navigate("/deposit")}
+              className="bg-gray-50 border border-gray-100 rounded-xl px-5 py-5 flex items-center justify-center gap-2 text-2xl font-mono text-gray-700 hover:bg-gray-100 transition">
                 + Deposit
               </button>
               <button className="bg-gray-50 border border-gray-100 rounded-xl px-5 py-5 flex items-center justify-center gap-2 text-2xl font-mono text-gray-700 hover:bg-gray-100 transition">
