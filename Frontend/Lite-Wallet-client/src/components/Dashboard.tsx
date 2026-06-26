@@ -29,7 +29,7 @@ const Dashboard = () => {
         const response = await fetch("http://localhost:4900/api/v1/wallets/", {
           credentials: "include",
         });
-          console.log("response status:", response.status);
+        console.log("response status:", response.status);
         if (response.status === 401) {
           toast.error("Session expired, please log in again");
           navigate("/login");
@@ -38,7 +38,6 @@ const Dashboard = () => {
 
         const result = await response.json();
         setWallet(result.data);
-
       } catch (error) {
         console.error("Failed to fetch wallet:", error);
         toast.error("Could not load wallet");
@@ -61,7 +60,6 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
       <div className="w-full max-w-3xl bg-gray-300 border border-gray-100 rounded-2xl p-6 relative">
-
         {/* TOP BAR */}
         <div className="flex items-center justify-between mb-8">
           <h1 className="font-extrabold text-3xl text-gray-900">Lite Wallet</h1>
@@ -72,7 +70,6 @@ const Dashboard = () => {
 
         {/* MAIN LAYOUT */}
         <div className="flex flex-col lg:grid lg:grid-cols-[200px_1px_1fr] gap-6 lg:gap-8">
-
           {/* LEFT PANEL */}
           <div className="flex flex-col gap-4">
             <div className="space-y-4">
@@ -114,8 +111,10 @@ const Dashboard = () => {
               <button className="bg-gray-50 border border-gray-100 rounded-xl px-5 py-5 flex items-center justify-center gap-2 text-2xl font-mono text-gray-700 hover:bg-gray-100 transition">
                 ↗ Transfer
               </button>
-              <button 
-              onClick={() => navigate("/withdraw")}className="col-span-2 bg-gray-50 border border-gray-100 rounded-xl px-5 py-5 flex items-center justify-center gap-2 text-2xl font-mono text-gray-700 hover:bg-gray-100 transition">
+              <button
+                onClick={() => navigate("/withdraw")}
+                className="col-span-2 bg-gray-50 border border-gray-100 rounded-xl px-5 py-5 flex items-center justify-center gap-2 text-2xl font-mono text-gray-700 hover:bg-gray-100 transition"
+              >
                 $ Withdraw
               </button>
             </div>
@@ -153,14 +152,20 @@ const Dashboard = () => {
                         </p>
                       </div>
                       <span
-                        className={`text-sm font-semibold ${
+                        className={
                           tx.type.toLowerCase() === "deposit"
-                            ? "text-green-600"
-                            : "text-red-500"
-                        }`}
+                            ? "text-sm font-semibold text-green-600"
+                            : tx.type.toLowerCase() === "withdraw"
+                              ? "text-sm font-semibold text-red-500"
+                              : "text-sm font-semibold text-orange-500"
+                        }
                       >
-                        {tx.type === "deposit" ? "+" : "-"}UGX{" "}{tx.amount.toLocaleString()}
-                        
+                        {tx.type.toLowerCase() === "deposit"
+                          ? "↓"
+                          : tx.type.toLowerCase() === "withdraw"
+                            ? "↑"
+                            : "⇄"}{" "}
+                        UGX {tx.amount.toLocaleString()}
                       </span>
                     </li>
                   ))}
@@ -168,7 +173,6 @@ const Dashboard = () => {
               )}
             </div>
           </div>
-
         </div>
 
         <button
@@ -177,7 +181,6 @@ const Dashboard = () => {
         >
           ← Log out
         </button>
-
       </div>
     </div>
   );
