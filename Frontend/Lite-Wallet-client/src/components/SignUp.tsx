@@ -11,9 +11,10 @@ const signUpSchema =z.object({
     .min(1, "Full name is required")
     .min(3, "Name must be at least 3 characters"),
   email: z
-    .string()
-    .min(1, "Email is required")
-    .email("Enter a valid email address"),
+     .email({
+      message: "Enter a valid email address",
+    })
+    .min(1, "Email is required"),
   password: z
     .string()
     .min(1, "Password is required")

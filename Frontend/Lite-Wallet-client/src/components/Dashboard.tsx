@@ -108,7 +108,8 @@ const Dashboard = () => {
               >
                 + Deposit
               </button>
-              <button className="bg-gray-50 border border-gray-100 rounded-xl px-5 py-5 flex items-center justify-center gap-2 text-2xl font-mono text-gray-700 hover:bg-gray-100 transition">
+              <button  onClick={() => navigate("/transfer")}
+              className="bg-gray-50 border border-gray-100 rounded-xl px-5 py-5 flex items-center justify-center gap-2 text-2xl font-mono text-gray-700 hover:bg-gray-100 transition">
                 ↗ Transfer
               </button>
               <button

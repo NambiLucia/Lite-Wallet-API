@@ -4,45 +4,53 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
 
-const withdrawSchema = z.object({
+const TransferSchema = z.object({
   amount: z.number({
     error: (issue) =>
       issue.input === undefined
         ? "Amount is required"
         : "Amount must be a number",
   }),
+  receivingEmail: z
+     .email({
+      message: "Enter a valid email address",
+    })
+    .min(1, "Recipient Email is required"),
 });
 
-type WithdrawFormData = z.infer<typeof withdrawSchema>;
+type TransferFormData = z.infer<typeof TransferSchema>;
 
-const Withdraw = () => {
+const Transfer = () => {
   const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<WithdrawFormData>({
-    resolver: zodResolver(withdrawSchema),
+  } = useForm<TransferFormData>({
+    resolver: zodResolver(TransferSchema),
   });
 
-  const onSubmit = async (data: WithdrawFormData) => {
+  const onSubmit = async (data: TransferFormData) => {
     try {
-      const response = await fetch("http://localhost:4900/api/v1/wallets/withdraw", {
+      const response = await fetch("http://localhost:4900/api/v1/wallets/transfer", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({ amount: data.amount }),
+        body: JSON.stringify({
+          amount: data.amount,
+          receivingEmail: data.receivingEmail,
+        }),
       });
 
       const result = await response.json();
 
       if (!response.ok) {
-        toast.error(result.message || "Deposit failed");
+        toast.error(result.message || "Transfer failed");
         return;
       }
 
-      toast.success("Withdraw Successful🎉🎉🎉");
+      toast.success("Transfer successful 🎉");
       navigate("/dashboard");
 
     } catch (error) {
@@ -63,7 +71,7 @@ const Withdraw = () => {
           >
             ← Back
           </button>
-          <h1 className="font-extrabold text-2xl text-gray-900">Withdraw</h1>
+          <h1 className="font-extrabold text-2xl text-gray-900">Transfer</h1>
           <div className="w-10" />
         </div>
 
@@ -85,13 +93,29 @@ const Withdraw = () => {
             )}
           </div>
 
+          {/* RECIPIENT EMAIL */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Recipient Email
+            </label>
+            <input
+              type="email"
+              placeholder="recipient@example.com"
+              className="w-full border border-gray-400 bg-gray-50 rounded-xl px-4 py-3 text-base text-gray-900 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500"
+              {...register("receivingEmail")}
+            />
+            {errors.receivingEmail && (
+              <p className="text-red-500 text-sm mt-1">{errors.receivingEmail.message}</p>
+            )}
+          </div>
+
           {/* SUBMIT */}
           <button
             type="submit"
             disabled={isSubmitting}
             className="w-full py-3 bg-gray-900 text-white rounded-xl text-sm font-medium hover:bg-gray-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isSubmitting ? "Processing..." : "Confirm Withdraw"}
+            {isSubmitting ? "Processing..." : "Confirm Transfer"}
           </button>
 
           <button
@@ -103,10 +127,9 @@ const Withdraw = () => {
           </button>
 
         </form>
-
       </div>
     </div>
   );
 };
 
-export default Withdraw;
+export default Transfer;
