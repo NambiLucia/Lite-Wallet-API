@@ -42,7 +42,7 @@ const Deposit = () => {
         return;
       }
 
-      toast.success("Deposit successful");
+      toast.success("Deposit Successful🎉🎉🎉");
       navigate("/dashboard");
 
     } catch (error) {

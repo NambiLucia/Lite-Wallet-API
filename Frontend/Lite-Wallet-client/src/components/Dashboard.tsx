@@ -114,7 +114,8 @@ const Dashboard = () => {
               <button className="bg-gray-50 border border-gray-100 rounded-xl px-5 py-5 flex items-center justify-center gap-2 text-2xl font-mono text-gray-700 hover:bg-gray-100 transition">
                 ↗ Transfer
               </button>
-              <button className="col-span-2 bg-gray-50 border border-gray-100 rounded-xl px-5 py-5 flex items-center justify-center gap-2 text-2xl font-mono text-gray-700 hover:bg-gray-100 transition">
+              <button 
+              onClick={() => navigate("/withdraw")}className="col-span-2 bg-gray-50 border border-gray-100 rounded-xl px-5 py-5 flex items-center justify-center gap-2 text-2xl font-mono text-gray-700 hover:bg-gray-100 transition">
                 $ Withdraw
               </button>
             </div>
@@ -138,7 +139,7 @@ const Dashboard = () => {
                 </p>
               ) : (
                 <ul>
-                  {wallet?.transactions.slice(0, 3).map((tx) => (
+                  {wallet?.transactions.slice(0, 5).map((tx) => (
                     <li
                       key={tx.id}
                       className="flex items-center justify-between px-5 py-3 border-b border-gray-200 last:border-0"
@@ -158,7 +159,8 @@ const Dashboard = () => {
                             : "text-red-500"
                         }`}
                       >
-                        {tx.type === "deposit" ? "+" : "+"}UGX{" "}{tx.amount.toLocaleString()}
+                        {tx.type === "deposit" ? "+" : "-"}UGX{" "}{tx.amount.toLocaleString()}
+                        
                       </span>
                     </li>
                   ))}

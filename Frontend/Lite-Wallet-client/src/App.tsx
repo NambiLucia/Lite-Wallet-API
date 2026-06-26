@@ -4,6 +4,7 @@ import SignUp from "./components/SignUp";
 import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
 import Deposit from "./components/Deposit";
+import Withdraw from "./components/Withdraw";
 
 import './App.css'
 
@@ -21,6 +22,7 @@ function App() {
           <Route path="/login" element={<Login/>} />
           <Route path="/dashboard" element={<Dashboard/>} />
           <Route path="/deposit" element={<Deposit/>} />
+          <Route path="/withdraw" element={<Withdraw/>} />
 
         </Routes>
 
