@@ -153,13 +153,12 @@ const Dashboard = () => {
                       </div>
                       <span
                         className={`text-sm font-semibold ${
-                          tx.type === "deposit"
+                          tx.type.toLowerCase() === "deposit"
                             ? "text-green-600"
                             : "text-red-500"
                         }`}
                       >
-                        {tx.type === "deposit" ? "+" : "−"}UGX{" "}
-                        {tx.amount.toLocaleString()}
+                        {tx.type === "deposit" ? "+" : "+"}UGX{" "}{tx.amount.toLocaleString()}
                       </span>
                     </li>
                   ))}
