@@ -7,7 +7,7 @@ export const getAlerts = async (req: Request, res: Response) => {
       where: { userId: req.session.userId as string },
       orderBy: { createdAt: "desc" },
     });
-    const unreadAlertCount = alerts.filter((alert) => alert.isRead === true);
+    const unreadAlertCount = alerts.filter((alert) => alert.isRead === false);
 
     return res.status(200).json({
       data: {
