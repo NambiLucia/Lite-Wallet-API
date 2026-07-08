@@ -18,10 +18,22 @@ type Wallet = {
   transactions: Transaction[];
 };
 
+type Alert={
+   id: string;
+  message: string;
+  type:string
+  isRead: boolean;
+  createdAt: string;
+}
+
 const Dashboard = () => {
   const navigate = useNavigate();
   const [wallet, setWallet] = useState<Wallet | null>(null);
+  const [alerts, setAlerts] = useState<Alert[]>([]);
+  const [unreadCount, setUnreadCount] = useState(0);
+  const [showAlerts, setShowAlerts] = useState(false);
   const [loading, setLoading] = useState(true);
+
 
   useEffect(() => {
     const fetchWallet = async () => {
@@ -46,8 +58,53 @@ const Dashboard = () => {
       }
     };
 
+ const fetchAlerts = async () => {
+      try {
+        const response = await fetch("http://localhost:4900/api/v1/alerts/", {
+          credentials: "include",
+        });
+        const result = await response.json();
+        setAlerts(result.data.alerts);
+        setUnreadCount(result.data.alerts.filter((a: Alert) => !a.isRead).length);
+      } catch (error) {
+        console.error("Failed to fetch alerts:", error);
+      }
+    };
+
+
     fetchWallet();
+    fetchAlerts();
   }, [navigate]);
+
+ const handleBellClick = async () => {
+  setShowAlerts((prev) => !prev);
+
+  if (!showAlerts && unreadCount > 0) {
+    try {
+      const unreadAlerts = alerts.filter((alert) => !alert.isRead);
+
+      await Promise.all(
+        unreadAlerts.map((alert) =>
+          fetch(`http://localhost:4900/api/v1/alerts/${alert.id}`, {
+            method: "PATCH",
+            credentials: "include",
+          })
+        )
+      );
+
+      setUnreadCount(0);
+      setAlerts((prevAlerts) =>
+        prevAlerts.map((alert) => ({ ...alert, isRead: true }))
+      );
+
+    } catch (error) {
+      console.error("Failed to mark alerts as read:", error);
+    }
+  }
+};
+
+
+
 
   if (loading) {
     return (
@@ -63,9 +120,53 @@ const Dashboard = () => {
         {/* TOP BAR */}
         <div className="flex items-center justify-between mb-8">
           <h1 className="font-extrabold text-3xl text-gray-900">Lite Wallet</h1>
-          <button className="flex items-center gap-2 text-2xl font-bold hover:text-gray-700 transition">
-            🔔 Alerts
-          </button>
+
+           {/* BELL */}
+          <div className="relative">
+            <button
+              onClick={handleBellClick}
+              className="flex items-center gap-2 text-2xl font-bold hover:text-gray-700 transition relative"
+            >
+              🔔
+              {unreadCount > 0 && (
+                <span className="absolute -top-1 -right-2 bg-green-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                  {unreadCount}
+                </span>
+              )}
+            </button>
+{/* ALERTS DROPDOWN */}
+            {showAlerts && (
+              <div className="fixed inset-x-4 top-20 z-10 lg:absolute lg:inset-auto lg:right-0 lg:top-10 lg:w-72 bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden">
+                <div className="px-4 py-3 border-b border-gray-100">
+                  <p className="text-sm font-semibold text-gray-800">Alerts</p>
+                  
+
+                </div>
+                {alerts.length === 0 ? (
+                  <p className="text-sm text-gray-400 text-center py-6">
+                    No alerts
+                  </p>
+                ) : (
+                  <ul className="max-h-64 overflow-y-auto">
+                    {alerts.slice(0, 10).map((alert) => (
+                      <li
+                        key={alert.id}
+                        className={`px-4 py-3 border-b border-gray-50 last:border-0 ${
+                          !alert.isRead ? "bg-gray-50" : "bg-white"
+                        }`}
+                      >
+                        <p className="text-sm text-gray-700">{alert.message}</p>
+                        <p className="text-xs text-gray-400 mt-1">
+                          {new Date(alert.createdAt).toLocaleDateString()}
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            )}
+          </div>
+
         </div>
 
         {/* MAIN LAYOUT */}
