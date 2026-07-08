@@ -116,10 +116,10 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
-      <div className="w-full max-w-3xl bg-gray-300 border border-gray-100 rounded-2xl p-6 relative">
+      <div className="w-full max-w-3xl bg-[#0C3A98] border border-gray-100 rounded-2xl p-6 relative">
         {/* TOP BAR */}
         <div className="flex items-center justify-between mb-8">
-          <h1 className="font-extrabold text-3xl text-gray-900">Lite Wallet</h1>
+          <h1 className="font-extrabold text-3xl text-[#ffffff]">Lite Wallet</h1>
 
            {/* BELL */}
           <div className="relative">
@@ -175,14 +175,14 @@ const Dashboard = () => {
           <div className="flex flex-col gap-4">
             <div className="space-y-4">
               <div>
-                <p className="text-2xl font-bold text-gray-800 mb-1">Welcome</p>
-                <p className="text-2xl font-mono text-gray-900">
+                <p className="text-2xl font-bold text-[#ffffff] mb-1">Welcome</p>
+                <p className="text-2xl font-mono text-[#ffffff]">
                   {wallet?.user.full_name ?? "—"}
                 </p>
               </div>
               <div>
-                <p className="text-2xl font-bold text-gray-800 mb-1">Balance</p>
-                <p className="text-3xl font-mono text-gray-900">
+                <p className="text-2xl font-bold text-[#ffffff] mb-1">Balance</p>
+                <p className="text-3xl font-mono text-[#ffffff]">
                   UGX {wallet?.balance.toLocaleString() ?? "0"}
                 </p>
               </div>
@@ -190,7 +190,7 @@ const Dashboard = () => {
 
             <button
               onClick={() => navigate("/login")}
-              className="hidden lg:flex items-center gap-2 text-sm text-gray-800 hover:text-gray-400 transition mt-4"
+              className="hidden lg:flex items-center gap-2 text-sm text-[#ffffff] hover:text-gray-400 transition mt-4"
             >
               ← Log out
             </button>
@@ -205,24 +205,24 @@ const Dashboard = () => {
             <div className="grid grid-cols-2 gap-3">
               <button
                 onClick={() => navigate("/deposit")}
-                className="bg-gray-50 border border-gray-100 rounded-xl px-5 py-5 flex items-center justify-center gap-2 text-2xl font-mono text-gray-700 hover:bg-gray-100 transition"
+                className="bg-[#01B3F7] border border-gray-100 rounded-xl px-5 py-5 flex items-center justify-center gap-2 text-2xl font-mono text-gray-700 hover:bg-gray-100 transition"
               >
                 + Deposit
               </button>
               <button  onClick={() => navigate("/transfer")}
-              className="bg-gray-50 border border-gray-100 rounded-xl px-5 py-5 flex items-center justify-center gap-2 text-2xl font-mono text-gray-700 hover:bg-gray-100 transition">
+              className="bg-[#01B3F7] border border-gray-100 rounded-xl px-5 py-5 flex items-center justify-center gap-2 text-2xl font-mono text-gray-700 hover:bg-gray-100 transition">
                 ↗ Transfer
               </button>
               <button
                 onClick={() => navigate("/withdraw")}
-                className="col-span-2 bg-gray-50 border border-gray-100 rounded-xl px-5 py-5 flex items-center justify-center gap-2 text-2xl font-mono text-gray-700 hover:bg-gray-100 transition"
+                className="col-span-2 bg-[#01B3F7] border border-gray-100 rounded-xl px-5 py-5 flex items-center justify-center gap-2 text-2xl font-mono text-gray-700 hover:bg-gray-100 transition"
               >
                 $ Withdraw
               </button>
             </div>
 
             {/* RECENT TRANSACTIONS */}
-            <div className="border border-[#000000] rounded-xl overflow-hidden">
+            <div className="border border-[#000000] rounded-xl overflow-hidden bg-gray-100">
               <div className="flex items-center border-b border-[#000000]">
                 <div className="px-5 py-4 text-base font-bold text-gray-900 border-r border-[#000000]">
                   UGX {wallet?.balance.toLocaleString() ?? "0"}

@@ -61,7 +61,7 @@ const Transfer = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
-      <div className="w-full max-w-md bg-gray-300 border border-gray-100 rounded-2xl p-6">
+      <div className="w-full max-w-md bg-[#C4E2F5] border border-gray-100 rounded-2xl p-6">
 
         {/* TOP BAR */}
         <div className="flex items-center justify-between mb-8">
@@ -85,7 +85,7 @@ const Transfer = () => {
             <input
               type="number"
               placeholder="0"
-              className="w-full border border-gray-400 bg-gray-50 rounded-xl px-4 py-3 text-2xl font-mono text-gray-900 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500"
+              className="w-full border border-gray-400 bg-[#F3F4F6] rounded-xl px-4 py-3 text-2xl font-mono text-gray-900 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500"
               {...register("amount", { valueAsNumber: true })}
             />
             {errors.amount && (
@@ -101,7 +101,7 @@ const Transfer = () => {
             <input
               type="email"
               placeholder="recipient@example.com"
-              className="w-full border border-gray-400 bg-gray-50 rounded-xl px-4 py-3 text-base text-gray-900 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500"
+              className="w-full border border-gray-400 bg-[#F3F4F6] rounded-xl px-4 py-3 text-base text-gray-900 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500"
               {...register("receivingEmail")}
             />
             {errors.receivingEmail && (
@@ -121,7 +121,7 @@ const Transfer = () => {
           <button
             type="button"
             onClick={() => navigate("/dashboard")}
-            className="w-full py-3 border border-gray-400 rounded-xl text-sm text-gray-700 hover:bg-gray-400 transition"
+            className="w-full py-3 border border-gray-400 rounded-xl text-sm text-gray-700 hover:bg-gray-200 transition"
           >
             Cancel
           </button>
