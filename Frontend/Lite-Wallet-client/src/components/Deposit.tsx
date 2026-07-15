@@ -52,7 +52,7 @@ const Deposit = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4" style={{ backgroundImage: "url('/BG-IMAGE.png')" }}>
       <div className="w-full max-w-md bg-[#C4E2F5] border border-gray-100 rounded-2xl p-6">
 
         {/* TOP BAR */}

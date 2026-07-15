@@ -115,8 +115,8 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
-      <div className="w-full max-w-3xl bg-[#0C3A98] border border-gray-100 rounded-2xl p-6 relative">
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4" style={{ backgroundImage: "url('/BG-IMAGE.png')" }}>
+      <div className="w-full max-w-3xl bg-[#1E3A8A] border border-gray-100 rounded-2xl p-6 relative">
         {/* TOP BAR */}
         <div className="flex items-center justify-between mb-8">
           <h1 className="font-extrabold text-3xl text-[#ffffff]">Lite Wallet</h1>
@@ -205,17 +205,17 @@ const Dashboard = () => {
             <div className="grid grid-cols-2 gap-3">
               <button
                 onClick={() => navigate("/deposit")}
-                className="bg-[#01B3F7] border border-gray-100 rounded-xl px-5 py-5 flex items-center justify-center gap-2 text-2xl font-mono text-gray-700 hover:bg-gray-100 transition"
+                className="bg-[#60A5FA] border border-gray-100 rounded-xl px-5 py-5 flex items-center justify-center gap-2 text-2xl font-mono text-gray-700 hover:bg-gray-100 transition"
               >
                 + Deposit
               </button>
               <button  onClick={() => navigate("/transfer")}
-              className="bg-[#01B3F7] border border-gray-100 rounded-xl px-5 py-5 flex items-center justify-center gap-2 text-2xl font-mono text-gray-700 hover:bg-gray-100 transition">
+              className="bg-[#60A5FA] border border-gray-100 rounded-xl px-5 py-5 flex items-center justify-center gap-2 text-2xl font-mono text-gray-700 hover:bg-gray-100 transition">
                 ↗ Transfer
               </button>
               <button
                 onClick={() => navigate("/withdraw")}
-                className="col-span-2 bg-[#01B3F7] border border-gray-100 rounded-xl px-5 py-5 flex items-center justify-center gap-2 text-2xl font-mono text-gray-700 hover:bg-gray-100 transition"
+                className="col-span-2 bg-[#60A5FA] border border-gray-100 rounded-xl px-5 py-5 flex items-center justify-center gap-2 text-2xl font-mono text-gray-700 hover:bg-gray-100 transition"
               >
                 $ Withdraw
               </button>

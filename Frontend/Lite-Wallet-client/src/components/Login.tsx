@@ -63,20 +63,17 @@ const Login = () => {
 
   return (
     <div>
-      <section className="flex min-h-screen bg-gray-50">
+      <section className="flex min-h-screen bg-[#C4E2F5]">
 
         
         <div
           className="hidden lg:flex w-1/2 text-white items-center justify-center p-12 bg-cover bg-center"
-          style={{ backgroundImage: "url('/background.jpeg')" }}
+          style={{ backgroundImage: "url('/BG-IMAGE.png')" }}
         >
-          <div className="max-w-md text-center space-y-6">
-            <h1 className="text-4xl font-bold">Lite Wallet</h1>
-            <p className="text-lg text-gray-200">
-              Set up in seconds. Send, receive, and manage money — effortlessly.
-            </p>
-          </div>
+          
+        
         </div>
+
 
        
         <div className="flex w-full lg:w-1/2 items-center justify-center p-8 bg-gray-100">
