@@ -3,7 +3,7 @@ import { describe, test, expect, beforeAll } from "@jest/globals";
 import app from "../index";
 
 describe("Transaction test", () => {
-    let cookie string;
+    let cookie: string;
 
     beforeAll(async () => {
         const res = await request(app)
