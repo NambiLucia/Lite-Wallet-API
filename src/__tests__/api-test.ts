@@ -34,4 +34,115 @@ describe("Transaction test", () => {
 
         console.log("Deposit response:", res.body);
     });
+
+ test("Can not deposit without loggin in", async () => {
+        const res = await request(app)
+            .post("/api/v1/wallets/deposit")
+            .send({
+                amount: 50000
+            });
+
+        expect(res.status).toBe(401);
+
+        console.log("Deposit response:", res.body);
+    });
+
+ test("Successful WIthdraw", async () => {
+        const res = await request(app)
+            .post("/api/v1/wallets/withdraw")
+            .set("Cookie", cookie)
+            .send({
+                amount: 5000
+            });
+
+        expect(res.status).toBe(200);
+
+        console.log("Withdraw response:", res.body);
+    });
+
+
+ test("Insufficient funds", async () => {
+        const res = await request(app)
+            .post("/api/v1/wallets/withdraw")
+            .set("Cookie", cookie)
+            .send({
+                amount: 5000000
+            });
+
+        expect(res.status).toBe(400);
+
+        console.log("Withdraw response:", res.body);
+    });
+
+ test("Invalid amount", async () => {
+        const res = await request(app)
+            .post("/api/v1/wallets/withdraw")
+            .set("Cookie", cookie)
+            .send({
+                amount: ""
+            });
+
+        expect(res.status).toBe(400);
+
+        console.log("Withdraw response:", res.body);
+    });
+
+test("Successful Transfer", async () => {
+        const res = await request(app)
+            .post("/api/v1/wallets/transfer")
+            .set("Cookie", cookie)
+            .send({
+                receivingEmail:"tester22@email.com",
+                amount: 23000
+            });
+
+        expect(res.status).toBe(200);
+
+        console.log("Transfer response:", res.body);
+    });
+
+
+test("Recipient doesn't exist", async () => {
+        const res = await request(app)
+            .post("/api/v1/wallets/transfer")
+            .set("Cookie", cookie)
+            .send({
+                receivingEmail:"fakeuser@email.com",
+                amount: 23000
+            });
+
+        expect(res.status).toBe(404);
+
+        console.log("Transfer response:", res.body);
+    });
+
+test("Can't transfer to yourself", async () => {
+        const res = await request(app)
+            .post("/api/v1/wallets/transfer")
+            .set("Cookie", cookie)
+            .send({
+                receivingEmail:"hallytest@email.com",
+                amount: 23000
+            });
+
+        expect(res.status).toBe(400);
+
+        console.log("Transfer response:", res.body);
+    });
+
+test("Insufficient funds to Transfer", async () => {
+        const res = await request(app)
+            .post("/api/v1/wallets/transfer")
+            .set("Cookie", cookie)
+            .send({
+                receivingEmail:"tester22@email.com",
+                amount: 1000000
+            });
+
+        expect(res.status).toBe(400);
+
+        console.log("Transfer response:", res.body);
+    });
+
+
 });
