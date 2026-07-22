@@ -24,7 +24,7 @@ describe("Transaction test", () => {
 
     test("Only logged in user can deposit", async () => {
         const res = await request(app)
-            .post("/api/v1/wallet/deposit")
+            .post("/api/v1/wallets/deposit")
             .set("Cookie", cookie)
             .send({
                 amount: 50000
