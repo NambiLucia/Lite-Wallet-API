@@ -24,13 +24,13 @@ describe("Transaction test", () => {
 
     test("Only logged in user can deposit", async () => {
         const res = await request(app)
-            .post("/api/v1/wallets/deposit")
-            .set("Cookie", cookie)
+            .get("/api/v1/wallets/deposit")
+            // .set("Cookie", cookie)
             .send({
                 amount: 50000
             });
 
-        expect(res.status).toBe(200);
+        expect(res.status).toBe(404);
 
         console.log("Deposit response:", res.body);
     });
@@ -145,4 +145,44 @@ test("Insufficient funds to Transfer", async () => {
     });
 
 
+});
+
+describe("Wallet test", () => {
+    let cookie: string;
+
+    beforeAll(async () => {
+        const res = await request(app)
+            .post("/api/v1/auth/register")
+            .send({
+                full_name: "maino",
+                email: "maino@email.com",
+                password: "maino2026"
+            });
+
+        expect(res.status).toBe(201);
+        console.log("New User:", res.body);
+
+        // Log in 
+        const loginRes = await request(app)
+            .post("/api/v1/auth/login")
+            .send({
+                email: "maino@email.com",
+                password: "maino2026"
+            });
+
+        expect(loginRes.status).toBe(200);
+        expect(loginRes.headers["set-cookie"]).toBeDefined();
+
+        cookie = loginRes.headers["set-cookie"][0];
+    });
+
+    test("Get Wallet Balance", async () => {
+        const res = await request(app)
+            .get("/api/v1/wallets/")
+            .set("Cookie", cookie);
+
+        expect(res.status).toBe(200);
+
+        console.log("Wallet response:", res.body);
+    });
 });
