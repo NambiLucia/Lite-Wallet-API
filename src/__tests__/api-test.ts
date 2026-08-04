@@ -1,6 +1,8 @@
 import request from "supertest";
-import { describe, test, expect, beforeAll } from "@jest/globals";
+import { describe, test, expect, beforeAll, afterAll } from "@jest/globals";
 import app from "../index";
+import { prisma } from "../lib/prisma";
+
 
 describe("Transaction test", () => {
     let cookie: string;
@@ -22,15 +24,15 @@ describe("Transaction test", () => {
     });
 
 
-    test("Only logged in user can deposit", async () => {
+    test("Cannot deposit when not logged in", async () => {
         const res = await request(app)
-            .get("/api/v1/wallets/deposit")
+            .post("/api/v1/wallets/deposit")
             // .set("Cookie", cookie)
             .send({
                 amount: 50000
             });
 
-        expect(res.status).toBe(404);
+        expect(res.status).toBe(401);
 
         console.log("Deposit response:", res.body);
     });
@@ -93,7 +95,7 @@ test("Successful Transfer", async () => {
             .set("Cookie", cookie)
             .send({
                 receivingEmail:"tester22@email.com",
-                amount: 23000
+                amount: 3000
             });
 
         expect(res.status).toBe(200);
@@ -108,7 +110,7 @@ test("Recipient doesn't exist", async () => {
             .set("Cookie", cookie)
             .send({
                 receivingEmail:"fakeuser@email.com",
-                amount: 23000
+                amount: 1000
             });
 
         expect(res.status).toBe(404);
@@ -149,24 +151,25 @@ test("Insufficient funds to Transfer", async () => {
 
 describe("Wallet test", () => {
     let cookie: string;
+    let email: string;
 
     beforeAll(async () => {
+        email = `maino${Date.now()}@email.com`;
+
         const res = await request(app)
             .post("/api/v1/auth/register")
             .send({
                 full_name: "maino",
-                email: "maino@email.com",
+                email,
                 password: "maino2026"
             });
 
         expect(res.status).toBe(201);
-        console.log("New User:", res.body);
 
-        // Log in 
         const loginRes = await request(app)
             .post("/api/v1/auth/login")
             .send({
-                email: "maino@email.com",
+                email,
                 password: "maino2026"
             });
 
@@ -185,4 +188,16 @@ describe("Wallet test", () => {
 
         console.log("Wallet response:", res.body);
     });
+});
+
+afterAll(async () => {
+  console.log("Cleaning test data...");
+
+  await prisma.ledger.deleteMany();
+    await prisma.transaction.deleteMany();
+    // await prisma.wallet.deleteMany();
+    // await prisma.alert.deleteMany();
+    // await prisma.user.deleteMany();
+
+  await prisma.$disconnect();
 });
