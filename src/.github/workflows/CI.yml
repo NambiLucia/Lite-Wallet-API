@@ -1,15 +1,18 @@
-name: Lite Wallet CI
+name: Lite Wallet CI Pipeline
 
 on:
   push:
     branches:
       - main
-      - master
 
   pull_request:
     branches:
       - main
-      - master
+
+env:
+  DATABASE_URL: "file:./dev.db"
+  SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
+  PORT: 4900
 
 jobs:
   test:
@@ -22,16 +25,16 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 24
+          node-version: 20
 
       - name: Install Dependencies
-        run: npm install
+        run: npm ci
 
       - name: Generate Prisma Client
         run: npx prisma generate
 
-      - name: Run Prisma DB Push
+      - name: Create Database Schema
         run: npx prisma db push
 
-      - name: Run Tests
+      - name: Run Intergration Tests
         run: npm test
