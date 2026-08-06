@@ -9,6 +9,12 @@ import morgan from "morgan";
 
 const logDir = path.join(process.cwd(), "logs");
 
+// Create logs folder if it doesn't exist
+if (!fs.existsSync(logDir)) {
+    fs.mkdirSync(logDir);
+}
+
+
 const accessLogStream = fs.createWriteStream(path.join(logDir ,'request_logs.txt'), { flags: 'a' })
 
 export const logger = morgan('combined', { stream: accessLogStream })
