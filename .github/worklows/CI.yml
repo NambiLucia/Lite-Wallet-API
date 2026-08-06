@@ -36,5 +36,5 @@ jobs:
       - name: Create Database Schema
         run: npx prisma db push
 
-      - name: Run Intergration Tests
+      - name: Run Integration Tests
         run: npm test
