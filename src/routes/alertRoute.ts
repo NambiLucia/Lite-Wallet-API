@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { getAlerts,markAlertAsRead,sendSystemAlert} from "../controllers/alertController";
-import { sessionAuth } from "../middleware/sessionAuth";
-import { authorizeRole } from "../middleware/authorizeRole";
+import { getAlerts,markAlertAsRead,sendSystemAlert} from "../controllers/alertController.js";
+import { sessionAuth } from "../middleware/sessionAuth.js";
+import { authorizeRole } from "../middleware/authorizeRole.js";
 
 
 

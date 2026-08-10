@@ -1,11 +1,11 @@
 import express,{Request,Response} from "express";
-import { logger } from "../config/logger";
+import { logger } from "../config/logger.js";
 import cors from "cors"
-import authRoute from "./routes/authRoute"
-import userRoute from "./routes/userRoute";
-import walletRoute from "./routes/walletRoute"
-import transactionRoute from "./routes/transactionRoute";
-import alertRoute from "./routes/alertRoute";
+import authRoute from "./routes/authRoute.js"
+import userRoute from "./routes/userRoute.js";
+import walletRoute from "./routes/walletRoute.js"
+import transactionRoute from "./routes/transactionRoute.js";
+import alertRoute from "./routes/alertRoute.js";
 import session from "express-session";
 import rateLimit from "express-rate-limit";
 

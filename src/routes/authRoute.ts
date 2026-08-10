@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { register,login,logout } from "../controllers/authController"
-import { sessionAuth } from "../middleware/sessionAuth";
+import { register,login,logout } from "../controllers/authController.js"
+import { sessionAuth } from "../middleware/sessionAuth.js";
 
 const authRoute =Router()
 

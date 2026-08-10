@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { getTransactionsById } from "../controllers/transactionController";
-import { sessionAuth } from "../middleware/sessionAuth";
-import { authorizeRole } from "../middleware/authorizeRole";
+import { getTransactionsById } from "../controllers/transactionController.js";
+import { sessionAuth } from "../middleware/sessionAuth.js";
+import { authorizeRole } from "../middleware/authorizeRole.js";
 
 const transactionRoute=Router()
 

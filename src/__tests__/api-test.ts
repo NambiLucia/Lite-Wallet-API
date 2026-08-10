@@ -1,7 +1,7 @@
 import request from "supertest";
 import { describe, test, expect, beforeAll, afterAll } from "@jest/globals";
 import app from "../index";
-import { prisma } from "../lib/prisma";
+import { prisma } from "../lib/prisma.js";
 
 
 describe("Transaction test", () => {

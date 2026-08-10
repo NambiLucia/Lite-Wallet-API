@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { getWallet,deposit,withdraw,transfer} from "../controllers/walletController";
-import { sessionAuth } from "../middleware/sessionAuth";
-import { schemaValidator } from "../middleware/schemaValidator";
-import { depositSchema,withdrawSchema,transferSchema } from "../middleware/joi-schemas";
-import { authorizeRole } from "../middleware/authorizeRole";
+import { getWallet,deposit,withdraw,transfer} from "../controllers/walletController.js";
+import { sessionAuth } from "../middleware/sessionAuth.js";
+import { schemaValidator } from "../middleware/schemaValidator.js";
+import { depositSchema,withdrawSchema,transferSchema } from "../middleware/joi-schemas.js";
+import { authorizeRole } from "../middleware/authorizeRole.js";
 
 
 
